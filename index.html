@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ile kliknięć pena GLP-1? Kalkulator Ozempic, Mounjaro, Wegovy</title>
+<meta name="description" content="Sprawdź, ile kliknięć odpowiada danej dawce w penie Ozempic i Mounjaro KwikPen oraz jak ustawić dawkę Wegovy. Wyłącznie informacyjnie, nie zastępuje zaleceń lekarza.">
+<link rel="canonical" href="https://tylekliknij.pl/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:url" content="https://tylekliknij.pl/">
+<meta property="og:title" content="Ile kliknięć pena GLP-1? Kalkulator">
+<meta property="og:description" content="Wybierz lek, pen i dawkę, a zobaczysz liczbę kliknięć i objętość. Wyłącznie informacyjnie.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b6b6f'/%3E%3Cpath d='M16 6v13m0 0l-5-5m5 5l5-5M9 25h14' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Układ: jedna wąska kolumna, narzędzie na górze, wynik pod formularzem, stopka z danymi gabinetu */
+:root {
+  --bg: #f3f6f6;
+  --surface: #ffffff;
+  --ink: #12282b;
+  --muted: #526669;
+  --line: #d5e0e1;
+  --accent: #0b6b6f;
+  --accent-ink: #ffffff;
+  --warn-bg: #fff4dd;
+  --warn-line: #e3b45a;
+  --warn-ink: #5c3d00;
+  --ok-bg: #e3f3ec;
+  --ok-ink: #14553a;
+  --font: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1a1c; --surface: #152427; --ink: #e6f0f0; --muted: #9db4b6; --line: #29403f;
+    --accent: #52c3c7; --accent-ink: #062325;
+    --warn-bg: #3a2e12; --warn-line: #8a6a24; --warn-ink: #f3dcaa;
+    --ok-bg: #143427; --ok-ink: #a6e3c5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1a1c; --surface: #152427; --ink: #e6f0f0; --muted: #9db4b6; --line: #29403f;
+  --accent: #52c3c7; --accent-ink: #062325;
+  --warn-bg: #3a2e12; --warn-line: #8a6a24; --warn-ink: #f3dcaa;
+  --ok-bg: #143427; --ok-ink: #a6e3c5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--font); }
+main { max-width: 640px; margin: 0 auto; padding: 20px 16px 40px; display: flex; flex-direction: column; gap: 16px; }
+h1 { font-size: 26px; line-height: 1.15; margin: 4px 0 0; font-weight: 800; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 0 0 8px; font-weight: 700; text-wrap: balance; }
+p { margin: 0; }
+.lead { color: var(--muted); }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.warn { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-ink); border-radius: 12px; padding: 12px 14px; font-size: 14.5px; }
+.warn strong { font-weight: 700; }
+form { display: flex; flex-direction: column; gap: 14px; }
+label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+select { width: 100%; font: 500 16px var(--font); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 12px; min-height: 48px; }
+select:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+#result { display: flex; flex-direction: column; gap: 10px; }
+.big { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.big .n { font-size: 64px; line-height: 1; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+.big .u { font-size: 20px; font-weight: 600; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; }
+.facts div { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.facts dt { font-size: 12.5px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.note { font-size: 14.5px; color: var(--muted); }
+.ok { background: var(--ok-bg); color: var(--ok-ink); border-radius: 10px; padding: 12px 14px; font-weight: 500; }
+details { border-top: 1px solid var(--line); padding: 10px 0; }
+details:first-of-type { border-top: 0; }
+summary { cursor: pointer; font-weight: 600; }
+details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
+.doc { display: flex; flex-direction: column; gap: 10px; }
+.doc .name { font-size: 19px; font-weight: 800; }
+.doc ul { margin: 0; padding-left: 20px; }
+.doc li { margin: 2px 0; }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; }
+.contact { font-size: 15px; }
+.contact a { color: var(--accent); font-weight: 600; }
+.small { font-size: 13px; color: var(--muted); }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: no-preference) { .big .n { transition: opacity .15s; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Kalkulator kliknięć pena GLP-1</h1>
+    <p class="lead" style="margin-top:6px">Wybierz lek, pen i dawkę, a zobaczysz, ile to kliknięć i jaka objętość leku.</p>
+  </header>
+
+  <div class="warn" role="note">
+    <strong>Wyłącznie do celów informacyjnych.</strong> Autor w żadnym wypadku nie zaleca stosowania leku niezgodnie z zaleceniami lekarza i ulotką. Dawkę ustawia się według licznika dawki na penie. Liczenie kliknięć jest metodą nieoficjalną, której producenci nie badali.
+  </div>
+
+  <section class="box" aria-labelledby="h-form">
+    <h2 id="h-form">Parametry</h2>
+    <form id="f" onsubmit="return false">
+      <div>
+        <label for="drug">Lek</label>
+        <select id="drug">
+          <option value="oz">Ozempic (semaglutyd)</option>
+          <option value="mj">Mounjaro KwikPen (tirzepatyd)</option>
+          <option value="wg">Wegovy (semaglutyd)</option>
+        </select>
+      </div>
+      <div id="penRow">
+        <label for="pen">Pen, który masz w ręce</label>
+        <select id="pen"></select>
+      </div>
+      <div id="doseRow">
+        <label for="dose">Dawka przepisana przez lekarza</label>
+        <select id="dose"></select>
+      </div>
+    </form>
+  </section>
+
+  <section class="box" id="result" aria-live="polite" aria-labelledby="h-res">
+    <h2 id="h-res">Wynik</h2>
+    <div id="out"></div>
+  </section>
+
+  <section class="box" aria-labelledby="h-faq">
+    <h2 id="h-faq">Najczęstsze pytania</h2>
+    <details>
+      <summary>Mam napisane „klikaj aż pokaże się 0,25”. Co to znaczy?</summary>
+      <p>Chodzi o kręcenie pokrętłem, aż licznik dawki w okienku pena pokaże przepisaną dawkę i ustawi się w linii ze wskaźnikiem. To nie jest liczenie kliknięć. Potem wciskasz przycisk do oporu, aż licznik wróci do 0, i liczysz powoli do 6 przed wyjęciem igły.</p>
+    </details>
+    <details>
+      <summary>Dlaczego producenci nie zalecają liczenia kliknięć?</summary>
+      <p>Dokładność takiej dawki nie została sprawdzona. Błąd o kilka kliknięć to wyraźna różnica w dawce, a przy większych dawkach także w nasileniu objawów niepożądanych. Jeśli recepta i pen się nie zgadzają, poproś lekarza lub farmaceutę o właściwy pen.</p>
+    </details>
+    <details>
+      <summary>Skąd wzięły się te liczby?</summary>
+      <p>Kalkulator przyjmuje 0,01 ml na jedno kliknięcie. Dla Mounjaro KwikPen daje to 60 kliknięć na pełną dawkę 0,6 ml. Dla Ozempic jest to szacunek zgodny z liczbami krążącymi wśród pacjentów (0,25 mg to około 18 kliknięć, 0,5 mg około 37), a nie wartość podana przez producenta. Wynik zaokrąglamy w dół.</p>
+    </details>
+  </section>
+
+  <section class="box doc" aria-labelledby="h-doc">
+    <p class="small" id="h-doc">O autorze strony</p>
+    <p class="name">Prof. dr hab. Stanisław Dąbrowiecki</p>
+    <p>Chirurg. Operuję w Szpitalu Eskulap w Osielsku koło Bydgoszczy.</p>
+    <ul>
+      <li>chirurgia bariatryczna: mankiet żołądkowy (sleeve), bypass żołądkowy OAGB/MGB, operacje rewizyjne</li>
+      <li>przepukliny: technika Desarda bez siatki, Lichtenstein, laparoskopowa TAPP</li>
+    </ul>
+    <p>Leki z grupy GLP-1 pomagają wielu osobom. Jeśli leczenie nie przynosi oczekiwanych efektów albo szukasz trwałego rozwiązania otyłości, możemy porozmawiać o leczeniu operacyjnym.</p>
+    <p><a class="cta" href="https://mniejzoladka.pl">Chirurgia otyłości: mniejzoladka.pl</a></p>
+    <p class="contact">Konsultacje: ul. Mierosławskiego 9/3, Bydgoszcz<br>
+      Telefon: <a href="tel:+48603751335">603 751 335</a><br>
+      E-mail: <a href="mailto:s.dabrowiecki@outlook.com">s.dabrowiecki@outlook.com</a></p>
+  </section>
+
+  <p class="small">Strona ma charakter wyłącznie informacyjny i nie zastępuje porady lekarskiej, ulotki ani instrukcji użycia. Nie zmieniaj dawki ani sposobu podawania leku bez ustaleń z lekarzem prowadzącym. Dane o stężeniach pochodzą z charakterystyk produktów leczniczych; liczba kliknięć to wartość szacunkowa.</p>
+</main>
+
+<script>
+(function () {
+  var ML_PER_CLICK = 0.01;
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n, d) { return n.toLocaleString("pl-PL", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); };
+
+  // Ozempic: stężenie 1,34 mg/ml (pen 2 mg/1,5 ml i 4 mg/3 ml), 2,68 mg/ml (pen 8 mg/3 ml)
+  var OZ = [
+    { id: "oz15", label: "Ozempic 0,25 mg / 0,5 mg (pen 1,5 ml)", conc: 1.34, marked: [0.25, 0.5], doses: [0.25, 0.5] },
+    { id: "oz1",  label: "Ozempic 1 mg (pen 3 ml)",              conc: 1.34, marked: [1],         doses: [0.25, 0.5, 1] },
+    { id: "oz2",  label: "Ozempic 2 mg (pen 3 ml)",              conc: 2.68, marked: [2],         doses: [0.25, 0.5, 1, 2] }
+  ];
+  // Mounjaro KwikPen: pełna dawka = 0,6 ml = 60 kliknięć
+  var MJ_STR = [2.5, 5, 7.5, 10, 12.5, 15];
+  var MJ = MJ_STR.map(function (s) {
+    return { id: "mj" + s, label: "Mounjaro KwikPen " + fmt(s, s % 1 ? 1 : 0) + " mg", strength: s,
+             conc: s / 0.6, marked: [s], doses: MJ_STR.filter(function (d) { return d <= s; }) };
+  });
+
+  function pensFor(drug) { return drug === "oz" ? OZ : drug === "mj" ? MJ : []; }
+
+  function fill(sel, items, valueFn, labelFn) {
+    sel.innerHTML = "";
+    items.forEach(function (it, i) {
+      var o = document.createElement("option");
+      o.value = valueFn(it, i); o.textContent = labelFn(it, i);
+      sel.appendChild(o);
+    });
+  }
+
+  function onDrug() {
+    var drug = $("drug").value;
+    var wg = drug === "wg";
+    $("penRow").hidden = wg; $("doseRow").hidden = wg;
+    if (!wg) {
+      var pens = pensFor(drug);
+      fill($("pen"), pens, function (p, i) { return i; }, function (p) { return p.label; });
+      var def = drug === "oz" ? 1 : 3; // domyślnie Ozempic 1 mg, Mounjaro 10 mg
+      $("pen").value = def;
+      onPen();
+    } else { render(); }
+  }
+
+  function onPen() {
+    var pen = pensFor($("drug").value)[+$("pen").value];
+    var prev = $("dose").value;
+    fill($("dose"), pen.doses, function (d) { return d; }, function (d) { return fmt(d, d % 1 ? (d * 100 % 10 === 0 ? 1 : 2) : 0) + " mg"; });
+    var want = $("drug").value === "oz" ? 0.25 : pen.doses[0];
+    $("dose").value = (prev && pen.doses.indexOf(+prev) >= 0) ? prev : want;
+    render();
+  }
+
+  function render() {
+    var drug = $("drug").value, out = $("out");
+    if (drug === "wg") {
+      out.innerHTML =
+        '<div class="ok">Wegovy: nie licz kliknięć.</div>' +
+        '<p class="note">Pen Wegovy ustawia się na przepisaną dawkę według licznika w okienku: kręcisz pokrętłem, aż licznik zatrzyma się na dawce i ustawi w linii ze wskaźnikiem. Po wciśnięciu przycisku licz powoli do 6, zanim wyjmiesz igłę. Instrukcja wprost zabrania ustawiania dawki liczeniem kliknięć.</p>' +
+        '<p class="note">Jeśli pen ma inną dawkę niż ta z recepty, nie próbuj jej „dzielić”. Zapytaj lekarza lub farmaceutę o właściwy pen.</p>';
+      return;
+    }
+    var pen = pensFor(drug)[+$("pen").value], dose = +$("dose").value;
+    var isMarked = pen.marked.indexOf(dose) >= 0;
+    if (isMarked) {
+      out.innerHTML =
+        '<div class="ok">To dawka oficjalna dla tego pena: ustaw ją na liczniku dawki, bez liczenia kliknięć.</div>' +
+        (drug === "mj"
+          ? '<p class="note">Mounjaro KwikPen podaje stałą dawkę (0,6 ml). Wciśnij przycisk tak, jak opisuje instrukcja użycia.</p>'
+          : '<p class="note">Kręć pokrętłem, aż licznik pokaże ' + fmt(dose, dose % 1 ? 2 : 0) + ' mg i ustawi się w linii ze wskaźnikiem. Po wstrzyknięciu licz powoli do 6.</p>');
+      return;
+    }
+    var mlNeeded = dose / pen.conc;
+    var clicksExact = mlNeeded / ML_PER_CLICK;
+    var clicks = Math.floor(clicksExact + 1e-9);
+    var mgPerClick = pen.conc * ML_PER_CLICK;
+    out.innerHTML =
+      '<div class="big"><span class="n">' + clicks + '</span><span class="u">kliknięć</span></div>' +
+      '<dl class="facts">' +
+        '<div><dt>Dawka</dt><dd>' + fmt(dose, dose % 1 ? 2 : 0) + ' mg</dd></div>' +
+        '<div><dt>Objętość</dt><dd>ok. ' + fmt(mlNeeded, 3) + ' ml</dd></div>' +
+        '<div><dt>Stężenie</dt><dd>' + fmt(pen.conc, 2) + ' mg/ml</dd></div>' +
+        '<div><dt>Jedno kliknięcie</dt><dd>ok. ' + fmt(mgPerClick, 3) + ' mg</dd></div>' +
+      '</dl>' +
+      '<p class="note">Wyliczone: ' + fmt(clicksExact, 1) + ' kliknięcia, zaokrąglone w dół. To metoda nieoficjalna i szacunkowa, niezgodna z instrukcją producenta. Ustalenia dotyczące dawki zawsze konsultuj z lekarzem.</p>';
+  }
+
+  $("drug").addEventListener("change", onDrug);
+  $("pen").addEventListener("change", onPen);
+  $("dose").addEventListener("change", render);
+  onDrug();
+})();
+</script>
+</body>
+</html>
