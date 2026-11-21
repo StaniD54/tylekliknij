@@ -13,6 +13,7 @@
 <meta property="og:title" content="Ile kliknięć pena GLP-1? Kalkulator">
 <meta property="og:description" content="Wybierz lek, pen i dawkę, a zobaczysz liczbę kliknięć i objętość. Wyłącznie informacyjnie.">
 <meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"MedicalWebPage","inLanguage":"pl-PL","name":"Kalkulator kliknięć pena GLP-1","url":"https://tylekliknij.pl/","dateModified":"2026-11-21","author":{"@type":"Person","name":"Stanisław Dąbrowiecki","honorificPrefix":"Prof. dr hab.","jobTitle":"Chirurg"}}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b6b6f'/%3E%3Cpath d='M16 6v13m0 0l-5-5m5 5l5-5M9 25h14' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +34,7 @@
   --ok-bg: #e3f3ec;
   --ok-ink: #14553a;
   --font: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --p1: #fff0f4; --p2: #ffe6ed; --p3: #ffdbe5; --p4: #ffd0dd; --p5: #ffc5d5; --p6: #ffbacb;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -41,6 +43,7 @@
     --accent: #52c3c7; --accent-ink: #062325;
     --warn-bg: #3a2e12; --warn-line: #8a6a24; --warn-ink: #f3dcaa;
     --ok-bg: #143427; --ok-ink: #a6e3c5;
+    --p1: #36202a; --p2: #3e2530; --p3: #462a37; --p4: #4e2f3e; --p5: #563445; --p6: #5f3a4c;
     color-scheme: dark;
   }
 }
@@ -49,6 +52,7 @@
   --accent: #52c3c7; --accent-ink: #062325;
   --warn-bg: #3a2e12; --warn-line: #8a6a24; --warn-ink: #f3dcaa;
   --ok-bg: #143427; --ok-ink: #a6e3c5;
+  --p1: #36202a; --p2: #3e2530; --p3: #462a37; --p4: #4e2f3e; --p5: #563445; --p6: #5f3a4c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -97,10 +101,31 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
 .doc .name { font-size: 19px; font-weight: 800; }
 .doc ul { margin: 0; padding-left: 20px; }
 .doc li { margin: 2px 0; }
+.doc .more li { margin: 8px 0; }
+.doc .more a { color: var(--accent); font-weight: 700; }
 .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; }
 .contact { font-size: 15px; }
 .contact a { color: var(--accent); font-weight: 600; }
 .small { font-size: 13px; color: var(--muted); }
+.how ol { margin: 0 0 10px; padding-left: 22px; }
+.how li { margin: 6px 0; }
+.how .eq { font-variant-numeric: tabular-nums; font-weight: 600; }
+.how ul { margin: 0 0 8px; padding-left: 20px; }
+.how details ol, .how details ul { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+.how details p + p { margin-top: 8px; }
+.how details { border-top: 0; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.how details:first-of-type { margin-top: 0; }
+.how details:nth-of-type(1) { background: var(--p1); }
+.how details:nth-of-type(2) { background: var(--p2); }
+.how details:nth-of-type(3) { background: var(--p3); }
+.how details:nth-of-type(4) { background: var(--p4); }
+.how details:nth-of-type(5) { background: var(--p5); }
+.how > details { background: var(--p6); margin-top: 8px; }
+.how details p, .how details ol, .how details ul { color: var(--ink); }
+.how details ol.refs { font-size: 14px; }
+.how details ol.refs li { margin: 8px 0; overflow-wrap: anywhere; }
+.how details ol.refs a { color: var(--accent); }
+.how summary { padding: 2px 0; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: no-preference) { .big .n { transition: opacity .15s; } }
 </style>
@@ -120,7 +145,7 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
     <h2 id="h-form">Parametry</h2>
     <form id="f" onsubmit="return false">
       <div id="drugPick">
-        <label id="drugLabel">Wybierz lek</label>
+        <p id="drugLabel" style="font-weight:600;font-size:14px;margin-bottom:6px">Wybierz lek</p>
         <div class="cards" id="cards">
           <button type="button" class="card" data-drug="oz" aria-label="Ozempic, semaglutyd"><span class="nm">Ozempic</span><span class="sub">semaglutyd</span></button>
           <button type="button" class="card" data-drug="wg" aria-label="Wegovy, semaglutyd"><span class="nm">Wegovy</span><span class="sub">semaglutyd</span></button>
@@ -133,6 +158,7 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
           <option value="wg">Wegovy</option>
         </select>
       </div>
+      <p id="selectionHint" class="ok" role="status" hidden></p>
       <div id="penRow" hidden>
         <label for="pen">Pen, który masz w ręce</label>
         <select id="pen"></select>
@@ -149,6 +175,26 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
     <div id="out"></div>
   </section>
 
+  <section class="box how" id="how" hidden aria-labelledby="h-how">
+    <h2 id="h-how">Szczegóły rachunku i ostrzeżenia</h2>
+    <div id="howOut"></div>
+    <details>
+      <summary>Piśmiennictwo</summary>
+      <ol class="refs">
+        <li>Komé AM, Chandran MM, Tungate Lopez SS, Buse JB, Klein KR. One size does not fit all: understanding microdosing semaglutide for diabetes in multidose pens. <em>Diabetes Care</em> 2025;48(3):e25–e27. <a href="https://doi.org/10.2337/dc24-2575" rel="noopener">doi:10.2337/dc24-2575</a></li>
+        <li>Eldor R, Avraham N, Rosenberg O, Shpigelman M, Golan-Cohen A, Cukierman-Yaffe T, Merzon E, Buch A. Gradual titration of semaglutide results in better treatment adherence and fewer adverse events: a randomized controlled open-label pilot study examining a 16-week flexible titration regimen versus label-recommended 8-week semaglutide titration regimen. <em>Diabetes Care</em> 2025;48(9):1607–1611. <a href="https://doi.org/10.2337/dc25-0690" rel="noopener">doi:10.2337/dc25-0690</a></li>
+        <li>Infante M, Seminara G, Fabbri A, Aversa A. Microdosing, fractional and split dosing of injectable GLP-1-based drugs: balancing potential benefits and risks. <em>Minerva Endocrinol (Torino)</em> 2026 (publikacja online 13.11.2026). <a href="https://doi.org/10.23736/S2724-6507.26.04655-5" rel="noopener">doi:10.23736/S2724-6507.26.04655-5</a></li>
+        <li>Beck H, Clements JN. Considerations and challenges in microdosing of GLP-1-based receptor agonists. <em>Expert Opin Pharmacother</em> 2026 (publikacja online 5.10.2026). <a href="https://doi.org/10.1080/14656566.2026.2740393" rel="noopener">doi:10.1080/14656566.2026.2740393</a></li>
+        <li>Trainer N. The &quot;microdosing&quot; dilemma: balancing patient anecdotes with clinical safety amid GLP-1 compounding restrictions. <em>J Am Assoc Nurse Pract</em> 2026 (publikacja online 26.05.2026). <a href="https://doi.org/10.1097/JXX.0000000000001296" rel="noopener">doi:10.1097/JXX.0000000000001296</a></li>
+        <li>European Medicines Agency. Wegovy (semaglutide): Product Information (EPAR), zawiera stężenia i zawartość penów. <a href="https://www.ema.europa.eu/documents/product-information/wegovy-epar-product-information_de.pdf" rel="noopener">ema.europa.eu</a> (wersja niemiecka)</li>
+        <li>Novo Nordisk. Wegovy FlexTouch 0.25 mg, 0.5 mg, 1 mg, 1.7 mg and 2.4 mg, solution for injection in pre-filled pen: package leaflet (instrukcja użycia pena). electronic Medicines Compendium. <a href="https://www.medicines.org.uk/emc/product/13799/pil" rel="noopener">medicines.org.uk</a></li>
+        <li>Australian Diabetes Educators Association. Ozempic (semaglutide) and pen dosing by clicks, 2024 (zawiera stanowisko producenta, że nie podaje objętości przypadającej na jedno kliknięcie). <a href="https://www.adea.com.au/wp-content/uploads/2024/03/OZEMPIC-semaglutide-and-Pen-Dosing-by-Clicks.pdf" rel="noopener">adea.com.au</a></li>
+        <li>ISMP Consumer MedSafety. Errors possible when microdosing (counting clicks) to dose weight loss medicines, 6.01.2025. <a href="https://www.consumermedsafety.org/safety-articles/errors-possible-when-microdosing-counting-clicks-to-dose-weight-loss-medicines" rel="noopener">consumermedsafety.org</a></li>
+      </ol>
+      <p class="small">Pozycje 1–5 odnaleziono w bazie PubMed. Żadna z nich nie podaje zmierzonej objętości jednego kliknięcia dla pena Wegovy.</p>
+    </details>
+  </section>
+
   <section class="box" aria-labelledby="h-faq">
     <h2 id="h-faq">Najczęstsze pytania</h2>
     <details>
@@ -161,7 +207,7 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
     </details>
     <details>
       <summary>Skąd wzięły się te liczby?</summary>
-      <p>Kalkulator przyjmuje 0,01 ml na jedno kliknięcie. Dla Mounjaro KwikPen daje to 60 kliknięć na pełną dawkę 0,6 ml. Dla Ozempic jest to szacunek zgodny z liczbami krążącymi wśród pacjentów (0,25 mg to około 18 kliknięć, 0,5 mg około 37), a nie wartość podana przez producenta. Wynik zaokrąglamy w dół.</p>
+      <p>Kalkulator przyjmuje 0,01 ml na jedno kliknięcie. Dla Mounjaro KwikPen daje to 60 kliknięć na pełną dawkę 0,6 ml. Dla Ozempic jest to szacunek zgodny z liczbami krążącymi wśród pacjentów (0,25 mg to około 18 kliknięć, 0,5 mg około 37), a nie wartość podana przez producenta. Wynik zaokrąglamy do najbliższej liczby całkowitej. Szczegółowy rachunek dla wybranego pena i dawki jest w ramce „Jak to obliczono”.</p>
     </details>
   </section>
 
@@ -175,6 +221,11 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
     </ul>
     <p>Leki z grupy GLP-1 pomagają wielu osobom. Jeśli leczenie nie przynosi oczekiwanych efektów albo szukasz trwałego rozwiązania otyłości, możemy porozmawiać o leczeniu operacyjnym.</p>
     <p><a class="cta" href="https://mniejzoladka.pl">Chirurgia otyłości: mniejzoladka.pl</a></p>
+    <p class="small" style="margin-top:4px">Przepukliny</p>
+    <ul class="more">
+      <li><a href="https://przepuklinabezsiatki.pl" rel="noopener">przepuklinabezsiatki.pl</a>: operacja przepukliny pachwinowej bez siatki metodą Desarda, dla osób, które obawiają się siatek syntetycznych.</li>
+      <li><a href="https://przepuklinabrzuszna.pl" rel="noopener">przepuklinabrzuszna.pl</a>: przepukliny brzuszne, czyli objawy, metody operacji, wyniki leczenia i koszty.</li>
+    </ul>
     <p class="contact">Konsultacje: ul. Mierosławskiego 9/3, Bydgoszcz<br>
       Telefon: <a href="tel:+48603751335">603 751 335</a><br>
       E-mail: <a href="mailto:s.dabrowiecki@outlook.com">s.dabrowiecki@outlook.com</a></p>
@@ -212,8 +263,13 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
   ];
   function pensFor(drug) { return drug === "oz" ? OZ : drug === "mj" ? MJ : drug === "wg" ? WG : []; }
 
-  function fill(sel, items, valueFn, labelFn) {
+  function fill(sel, items, valueFn, labelFn, placeholder) {
     sel.innerHTML = "";
+    if (placeholder) {
+      var ph = document.createElement("option");
+      ph.value = ""; ph.textContent = placeholder;
+      sel.appendChild(ph);
+    }
     items.forEach(function (it, i) {
       var o = document.createElement("option");
       o.value = valueFn(it, i); o.textContent = labelFn(it, i);
@@ -224,55 +280,135 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
   function choose(drug) {
     $("drug").value = drug;
     var cs = document.querySelectorAll(".card");
-    for (var i = 0; i < cs.length; i++) cs[i].hidden = cs[i].getAttribute("data-drug") !== drug;
+    for (var i = 0; i < cs.length; i++) {
+      var sel = cs[i].getAttribute("data-drug") === drug;
+      cs[i].hidden = !sel; cs[i].setAttribute("aria-pressed", String(sel));
+    }
     $("cards").className = "cards one";
     $("drugLabel").textContent = "Wybrany lek";
     $("changeDrug").hidden = false;
-    $("result").hidden = false;
+    $("result").hidden = true;
+    $("how").hidden = true;
+    $("selectionHint").textContent = "Wybrano " + ({ oz: "Ozempic", wg: "Wegovy", mj: "Mounjaro" }[drug]) + ". Teraz wybierz pena, który masz w ręce, i dawkę.";
+    $("selectionHint").hidden = false;
     onDrug();
-    $("changeDrug").focus();
+    $("pen").focus();
   }
   function reset() {
     var cs = document.querySelectorAll(".card");
-    for (var i = 0; i < cs.length; i++) cs[i].hidden = false;
+    for (var i = 0; i < cs.length; i++) { cs[i].hidden = false; cs[i].setAttribute("aria-pressed", "false"); }
+    $("selectionHint").hidden = true;
     $("cards").className = "cards";
     $("drugLabel").textContent = "Wybierz lek";
     $("changeDrug").hidden = true;
-    $("penRow").hidden = true; $("doseRow").hidden = true; $("result").hidden = true;
+    $("penRow").hidden = true; $("doseRow").hidden = true; $("result").hidden = true; $("how").hidden = true;
   }
 
   function onDrug() {
     var drug = $("drug").value;
-    var wg = false;
     $("penRow").hidden = false; $("doseRow").hidden = false;
-    if (!wg) {
-      var pens = pensFor(drug);
-      fill($("pen"), pens, function (p, i) { return i; }, function (p) { return p.label; });
-      var def = drug === "oz" ? 1 : drug === "wg" ? 2 : 3; // domyślnie Ozempic 1 mg, Wegovy 1 mg, Mounjaro 10 mg
-      $("pen").value = def;
-      onPen();
-    } else { render(); }
+    fill($("pen"), pensFor(drug), function (p, i) { return i; }, function (p) { return p.label; }, "— Wybierz —");
+    $("pen").value = "";
+    onPen();
   }
 
   function onPen() {
+    if ($("pen").value === "") {
+      fill($("dose"), [], function (d) { return d; }, function (d) { return d; }, "— Najpierw wybierz pena —");
+      $("dose").value = ""; $("dose").disabled = true;
+      render();
+      return;
+    }
     var pen = pensFor($("drug").value)[+$("pen").value];
     var prev = $("dose").value;
-    fill($("dose"), pen.doses, function (d) { return d; }, function (d) { return fmt(d, d % 1 ? (d * 100 % 10 === 0 ? 1 : 2) : 0) + " mg"; });
-    var want = $("drug").value === "mj" ? pen.doses[0] : 0.25;
-    $("dose").value = (prev && pen.doses.indexOf(+prev) >= 0) ? prev : want;
+    $("dose").disabled = false;
+    fill($("dose"), pen.doses, function (d) { return d; }, function (d) { return fmt(d, d % 1 ? (d * 100 % 10 === 0 ? 1 : 2) : 0) + " mg"; }, "— Wybierz —");
+    $("dose").value = (prev !== "" && pen.doses.indexOf(+prev) >= 0) ? prev : "";
     render();
   }
 
+  // Przykładowa niepewność objętości jednego kliknięcia (ilustracja, nie pomiar: producent tej wartości nie podaje)
+  var UNC = 0.10;
+  var sgn = function (x) { return (x >= 0 ? "+" : "−") + fmt(Math.abs(x), Math.abs(x) < 10 ? 1 : 0) + "%"; };
+  var mgTxt = function (x) { return fmt(x, 3) + " mg"; };
+  function doseTxt(d) { return fmt(d, d % 1 ? (Math.round(d * 100) % 10 === 0 ? 1 : 2) : 0); }
+  function podan(n) {
+    var m10 = n % 10, m100 = n % 100;
+    if (n === 1) return "podanie";
+    return (m10 >= 2 && m10 <= 4 && !(m100 >= 12 && m100 <= 14)) ? "podania" : "podań";
+  }
+
+  function concStep(drug, pen) {
+    var total = pen.conc * pen.vol;
+    if (drug === "mj") {
+      return 'Stężenie leku w penie: pen KwikPen ' + fmt(pen.strength, pen.strength % 1 ? 1 : 0) + ' mg podaje pełną dawkę w 0,6 ml, więc <span class="eq">' +
+        fmt(pen.strength, pen.strength % 1 ? 1 : 0) + ' mg ÷ 0,6 ml = ' + fmt(pen.conc, 2) + ' mg/ml</span>.';
+    }
+    return 'Stężenie leku w penie (z charakterystyki produktu leczniczego): <span class="eq">' + fmt(pen.conc, 2) + ' mg/ml</span>' +
+      ' (pen zawiera nominalnie ok. ' + fmt(total, 2) + ' mg w ' + fmt(pen.vol, 1) + ' ml).';
+  }
+  function assumptionText(drug) {
+    if (drug === "mj") return 'Założenie: jedno kliknięcie to ok. 0,01 ml. Dla Mounjaro KwikPen daje to 60 kliknięć na pełną dawkę 0,6 ml. To założenie tej strony, a nie wartość podana przez producenta.';
+    if (drug === "oz") return 'Założenie: jedno kliknięcie to ok. 0,01 ml. To szacunek zgodny z liczbami, które podają pacjenci (0,25 mg to ok. 18 kliknięć w penie 1 mg), a nie wartość podana przez producenta.';
+    return 'Założenie: jedno kliknięcie to ok. 0,01 ml. Dla Wegovy nie znaleziono danych producenta o objętości jednego kliknięcia, więc przeniesiono wartość z innych penów. To najsłabsze ogniwo rachunku.';
+  }
+
+  function howMarked(drug, pen, dose) {
+    var d = doseTxt(dose);
+    return '<p>Dla dawki <strong>' + d + ' mg</strong> nic nie liczymy: to dawka, na którą ten pen jest przeznaczony. Ustawiasz ją według licznika dawki w okienku pena, a nie przez liczenie kliknięć.</p>' +
+      '<p class="note">Rachunek kliknięć pojawia się tylko wtedy, gdy wybierzesz dawkę mniejszą niż ta, do której pen jest przeznaczony.</p>';
+  }
+
+  function sec(title, body, open) {
+    return '<details' + (open ? ' open' : '') + '><summary>' + title + '</summary>' + body + '</details>';
+  }
+
+  // Sekcje rozwijane pod wynikiem. x: { errPct, partial, weeksBody, partialBody, wgBody }
+  function howCalc(drug, pen, dose, mlNeeded, clicksExact, clicks, x) {
+    var mgPer = pen.conc * ML_PER_CLICK;
+    var given = clicks * mgPer;
+    var diff = (given - dose) / dose * 100;
+    var d = doseTxt(dose);
+    var lo = clicks * mgPer * (1 - UNC), hi = clicks * mgPer * (1 + UNC);
+    var dLo = (lo - dose) / dose * 100, dHi = (hi - dose) / dose * 100;
+    var less = clicks > 1 ? clicks - 1 : 0, more = clicks + 1;
+    var dLess = (less * mgPer - dose) / dose * 100, dMore = (more * mgPer - dose) / dose * 100;
+    var h = '';
+    h += sec('Jak to obliczono',
+      '<ol>' +
+      '<li>' + concStep(drug, pen) + '</li>' +
+      '<li>Potrzebna objętość: <span class="eq">' + d + ' mg ÷ ' + fmt(pen.conc, 2) + ' mg/ml = ' + fmt(mlNeeded, 3) + ' ml</span>.</li>' +
+      '<li>' + assumptionText(drug) + '</li>' +
+      '<li>Liczba kliknięć: <span class="eq">' + fmt(mlNeeded, 3) + ' ml ÷ ' + fmt(ML_PER_CLICK, 2) + ' ml = ' + fmt(clicksExact, 2) + '</span>, po zaokrągleniu do najbliższej liczby całkowitej: <strong>' + clicks + '</strong>.</li>' +
+      '</ol>', false);
+    h += sec('Jak dokładne to jest',
+      '<ul>' +
+      '<li><strong>Zaokrąglenie.</strong> ' + clicks + ' kliknięć to ' + mgTxt(given) + ', czyli ' + sgn(diff) + ' względem ' + d + ' mg. Jedno kliknięcie mniej (' + less + ') to ' + mgTxt(less * mgPer) + ' (' + sgn(dLess) + '), jedno więcej (' + more + ') to ' + mgTxt(more * mgPer) + ' (' + sgn(dMore) + '). Pomyłka o jedno kliknięcie to ok. ' + fmt(x.errPct, x.errPct < 10 ? 1 : 0) + '% dawki. Im mniej kliknięć, tym większy błąd względny.</li>' +
+      '<li><strong>Niepewność założenia.</strong> Nie znamy rzeczywistej objętości kliknięcia, więc nie da się podać prawdopodobieństwa błędu. Dla przykładu: gdyby kliknięcie różniło się od założonego o ' + fmt(UNC * 100, 0) + '% w jedną lub drugą stronę, ' + clicks + ' kliknięć dałoby od ' + mgTxt(lo) + ' do ' + mgTxt(hi) + ' (' + sgn(dLo) + ' do ' + sgn(dHi) + ' względem ' + d + ' mg). To ilustracja, a nie pomiar, i rzeczywisty błąd może być większy.</li>' +
+      '<li><strong>Metoda nieoficjalna.</strong> Liczba kliknięć to wartość szacunkowa, a samo liczenie kliknięć jest niezgodne z instrukcją producenta, według której dawkę ustawia się na liczniku dawki w okienku pena. Producenci nie badali dokładności tej metody.</li>' +
+      '</ul>', false);
+    if (x.weeksBody) h += sec('Na ile tygodni starczy pen i jak długo wolno go używać', x.weeksBody, false);
+    if (x.partialBody) h += sec('Ważne: dawka mniejsza niż ta, do której pen jest przeznaczony', x.partialBody, false);
+    if (x.wgBody) h += sec('Wegovy: instrukcja producenta', x.wgBody, false);
+    return h;
+  }
+
   function render() {
+    if ($("pen").value === "" || $("dose").value === "") {
+      $("result").hidden = true; $("how").hidden = true;
+      return;
+    }
+    $("result").hidden = false; $("how").hidden = false; $("selectionHint").hidden = true;
     var drug = $("drug").value, out = $("out");
     var pen = pensFor(drug)[+$("pen").value], dose = +$("dose").value;
     var isMarked = pen.marked.indexOf(dose) >= 0;
     if (isMarked) {
+      $("howOut").innerHTML = howMarked(drug, pen, dose);
       out.innerHTML =
         '<div class="ok">To dawka oficjalna dla tego pena: ustaw ją na liczniku dawki, bez liczenia kliknięć.</div>' +
         (drug === "mj"
           ? '<p class="note">Mounjaro KwikPen podaje stałą dawkę (0,6 ml). Wciśnij przycisk tak, jak opisuje instrukcja użycia.</p>'
-          : '<p class="note">Kręć pokrętłem, aż licznik pokaże ' + fmt(dose, dose % 1 ? 2 : 0) + ' mg i ustawi się w linii ze wskaźnikiem. Po wstrzyknięciu licz powoli do 6.</p>');
+          : '<p class="note">Kręć pokrętłem, aż licznik pokaże ' + doseTxt(dose) + ' mg i ustawi się w linii ze wskaźnikiem. Po wstrzyknięciu licz powoli do 6.</p>');
       return;
     }
     var mlNeeded = dose / pen.conc;
@@ -282,33 +418,37 @@ details p { margin-top: 6px; color: var(--muted); font-size: 15px; }
     var minMarked = Math.min.apply(null, pen.marked);
     var partial = dose < minMarked - 1e-9;
     var errPct = clicks > 0 ? 100 / clicks : 0;
-    var wgNote = drug === "wg" ? '<p class="note"><strong>Wegovy:</strong> instrukcja producenta wprost zabrania ustawiania dawki przez liczenie kliknięć. Dawkę ustawia się według licznika w okienku pena. Podane liczby to wyłącznie szacunek nieoficjalnej metody.</p>' : '';
+    var wgBody = drug === "wg"
+      ? '<p>Instrukcja producenta wprost zabrania ustawiania dawki przez liczenie kliknięć. Dawkę ustawia się według licznika w okienku pena. Podane liczby to wyłącznie szacunek nieoficjalnej metody.</p>' +
+        '<p>Nie potwierdzono też, że z tego pena da się ustawić tak małą dawkę: instrukcja producenta mówi o ustawieniu dawki przepisanej, wskazanej przez licznik.</p>'
+      : '';
     var totalMg = pen.conc * pen.vol;
     var weeks = Math.floor(totalMg / dose + 1e-9);
     var inUse = drug === "oz" ? 6 : 0; // Ozempic: 6 tygodni po pierwszym użyciu (ChPL)
-    var weeksNote = partial
-      ? '<p class="note"><strong>Na ile tygodni starczy pen?</strong> Pen zawiera nominalnie ok. ' + fmt(totalMg, 2) + ' mg, więc przy dawce ' + fmt(dose, dose % 1 ? 2 : 0) + ' mg raz w tygodniu wystarczyłby teoretycznie na ok. ' + weeks + ' tyg. ' +
-        (inUse
+    var weeksBody = partial
+      ? '<p><strong>Przy takim dawkowaniu leku starczy na ok. ' + weeks + ' ' + podan(weeks) + '</strong> (dawek po ' + doseTxt(dose) + ' mg).</p>' +
+        '<p>Pen zawiera nominalnie ok. ' + fmt(totalMg, 2) + ' mg. Przy jednym podaniu tygodniowo to teoretycznie ok. ' + weeks + ' tyg.</p>' +
+        '<p>' + (inUse
           ? (weeks > inUse
               ? 'Producent dopuszcza jednak używanie pena Ozempic tylko przez ' + inUse + ' tygodni od pierwszego użycia (przy przechowywaniu poniżej 30°C lub w lodówce). Po tym czasie nie ma gwarancji składu, jałowości i skuteczności leku, więc pozostałej części (ok. ' + (weeks - inUse) + ' dawek) nie należy używać. Realna oszczędność jest więc ograniczona.'
               : 'To mieści się w ' + inUse + ' tygodniach, które producent dopuszcza po pierwszym użyciu pena Ozempic.')
-          : ((drug === "mj" ? 'Mounjaro KwikPen' : 'Pen Wegovy') + ' jest przewidziany na 4 dawki w kolejnych tygodniach. Przy dłuższym używaniu nie ma danych producenta o trwałości leku w penie, więc sprawdź w ulotce okres ważności po pierwszym użyciu i warunki przechowywania.')) +
-        ' Nie wiadomo, co dzieje się z lekiem po wielu tygodniach: może tracić moc, a otwarty pen może ulec zanieczyszczeniu bakteryjnemu.</p>'
+          : ((drug === "mj" ? 'Mounjaro KwikPen' : 'Pen Wegovy') + ' jest przewidziany na 4 dawki w kolejnych tygodniach. Przy dłuższym używaniu nie ma danych producenta o trwałości leku w penie, więc sprawdź w ulotce okres ważności po pierwszym użyciu i warunki przechowywania.')) + '</p>' +
+        '<p>Nie wiadomo, co dzieje się z lekiem po wielu tygodniach: może tracić moc, a otwarty pen może ulec zanieczyszczeniu bakteryjnemu.</p>'
       : '';
-    var extra = wgNote + weeksNote +
-      '<p class="note">Dokładność: pomyłka o jedno kliknięcie to ok. ' + fmt(errPct, errPct < 10 ? 1 : 0) + '% dawki. Im mniej kliknięć, tym większy błąd względny.</p>' +
-      (partial
-        ? '<p class="note"><strong>Dawka mniejsza niż ta, do której pen jest przeznaczony.</strong> Pen z większą zawartością leku, z którego pobiera się mniejsze dawki, to postępowanie niezgodne z ulotką. Pen nie jest projektowany do wielokrotnego dawkowania małych porcji, a producent nie badał takiego użycia. Zwróć uwagę na ważność pena po pierwszym użyciu i warunki przechowywania z ulotki, na jałowość (nowa igła do każdego wstrzyknięcia) oraz na to, że lek pozostaje w penie przez dłuższy czas. Takie ustalenia skonsultuj z lekarzem lub farmaceutą.</p>'
-        : '');
+    var partialBody = partial
+      ? '<p>Pen z większą zawartością leku, z którego pobiera się mniejsze dawki, to postępowanie niezgodne z ulotką. Pen nie jest projektowany do wielokrotnego dawkowania małych porcji, a producent nie badał takiego użycia.</p>' +
+        '<p>Zwróć uwagę na ważność pena po pierwszym użyciu i warunki przechowywania z ulotki, na jałowość (nowa igła do każdego wstrzyknięcia) oraz na to, że lek pozostaje w penie przez dłuższy czas.</p>'
+      : '';
+    $("howOut").innerHTML = howCalc(drug, pen, dose, mlNeeded, clicksExact, clicks,
+      { errPct: errPct, partial: partial, weeksBody: weeksBody, partialBody: partialBody, wgBody: wgBody });
     out.innerHTML =
       '<div class="big"><span class="n">' + clicks + '</span><span class="u">kliknięć</span></div>' +
       '<dl class="facts">' +
-        '<div><dt>Dawka</dt><dd>' + fmt(dose, dose % 1 ? 2 : 0) + ' mg</dd></div>' +
+        '<div><dt>Dawka</dt><dd>' + doseTxt(dose) + ' mg</dd></div>' +
         '<div><dt>Objętość</dt><dd>ok. ' + fmt(mlNeeded, 3) + ' ml</dd></div>' +
         '<div><dt>Stężenie</dt><dd>' + fmt(pen.conc, 2) + ' mg/ml</dd></div>' +
         '<div><dt>Jedno kliknięcie</dt><dd>ok. ' + fmt(mgPerClick, 3) + ' mg</dd></div>' +
-      '</dl>' +
-      '<p class="note">Wyliczone: ' + fmt(clicksExact, 1) + ' kliknięcia, zaokrąglone do najbliższej liczby całkowitej. To metoda nieoficjalna i szacunkowa, niezgodna z instrukcją producenta. Ustalenia dotyczące dawki zawsze konsultuj z lekarzem.</p>' + extra;
+      '</dl>';
   }
 
   Array.prototype.forEach.call(document.querySelectorAll(".card"), function (c) {
